@@ -19,7 +19,16 @@ export const searchMovies = async page => {
     store.state.message = ''
   }
   try{
-    const res = await fetch(`https://www.omdbapi.com/?apikey=88869279&s=${store.state.searchText}&page=${page}`)
+    // 정보를 담아 보내려면 POST방식을 이용
+    // body에는 string만 보낼 수 있음
+
+    const res = await fetch('./api/movie', {
+      method: 'POST',
+      body: JSON.stringify({
+        title: store.state.searchText,
+        page
+      })
+    })
     const { Search, totalResults, Response, Error } = await res.json()
     if(Response === "True"){
       // n+1 페이지 로드 시 n 페이지 + n+1페이지를 합쳐서 다시 state.movies 에 할당
@@ -43,7 +52,12 @@ export const searchMovies = async page => {
 
 export const getMovieDetails = async id => {
   try{
-    const res =await fetch(`https://www.omdbapi.com/?apikey=88869279&i=${id}&plot=full`)
+    const res = await fetch('/api/movie',{
+      method: 'POST',
+      body:JSON.stringify({
+        id
+      })
+    })
     store.state.movie = await res.json()
 
   }catch(err){
