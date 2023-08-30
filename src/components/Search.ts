@@ -14,17 +14,17 @@ export default class Search extends Component{
     `
 
   const inputEl = this.el.querySelector('input')
-  inputEl.addEventListener('input', ()=>{
+  inputEl?.addEventListener('input', ()=>{
     movieStore.state.searchText = inputEl.value
   })
-  inputEl.addEventListener('keydown', event=>{
+  inputEl?.addEventListener('keydown', event=>{
     if(event.key === "Enter" && movieStore.state.searchText.trim()){
       searchMovies(1)
     }
   })
 
   const btnEl = this.el.querySelector('button')
-  btnEl.addEventListener('click',()=>{
+  btnEl?.addEventListener('click',()=>{
     if(movieStore.state.searchText.trim()){
       searchMovies(1)
     }
